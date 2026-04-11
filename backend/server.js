@@ -3,18 +3,14 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
+app.use(cors()); // 🔥 THIS FIXES YOUR ERROR
 app.use(express.json());
 
-// Test route
 app.get('/', (req, res) => {
-    res.send("Backend is running ✅");
+    res.send("Backend running ✅");
 });
 
-// Order route
 app.post('/order', (req, res) => {
-    console.log("DATA RECEIVED:", req.body);
-
     const { name, order } = req.body;
 
     if (!name || !order) {
@@ -26,7 +22,6 @@ app.post('/order', (req, res) => {
     });
 });
 
-// IMPORTANT FOR RENDER
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
