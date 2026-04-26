@@ -143,7 +143,7 @@
 <body>
 
 <header>
-    <h1>🍽️ Royal Bites</h1>
+    <h1>🍽️ Khyber Bites</h1>
     <p>Experience Taste Like Never Before</p>
 </header>
 
@@ -151,6 +151,7 @@
     <a href="#home">Home</a>
     <a href="#menu">Menu</a>
     <a href="#order">Order</a>
+    <a href="#contact">Contact</a>
 </nav>
 
 <section id="home">
@@ -164,26 +165,31 @@
     <div class="menu-container">
 
         <div class="menu-card">
-            <img src="https://images.unsplash.com/photo-1601924582975-7e9e0c1f3bfa">
+            <img src="https://i.pinimg.com/originals/f9/00/7f/f9007f73da46783cb255a1e621637f27.jpg?nii=t">
             <h3>Pizza</h3>
             <p>Rs. 1200</p>
             <button onclick="orderItem('Pizza')">Order</button>
         </div>
 
         <div class="menu-card">
-            <img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.VFZPQNKwQuLi-NhNLcIHgQHaHa?pid=Api&P=0&h=220">
             <h3>Burger</h3>
             <p>Rs. 500</p>
             <button onclick="orderItem('Burger')">Order</button>
         </div>
 
         <div class="menu-card">
-            <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0">
+            <img src="https://sweetcaramelsunday.com/wp-content/uploads/Penne-Bolognese-130.jpg">
             <h3>Pasta</h3>
             <p>Rs. 800</p>
             <button onclick="orderItem('Pasta')">Order</button>
         </div>
-
+<div class="menu-card">
+            <img src="https://pics.craiyon.com/2023-07-08/b33f3ecbb22249eb828b3b83baeeada4.webp">
+            <h3>Biryani</h3>
+            <p>Rs. 300</p>
+            <button onclick="orderItem('Biryani')">Order</button>
+        </div>
     </div>
 </section>
 
@@ -193,34 +199,55 @@
     <form id="orderForm">
         <input type="text" id="name" placeholder="Your Name" required>
         <input type="text" id="food" placeholder="Food Item" required>
+        <label for="phone">Phone Number:</label>
+<input type="tel" id="phone" name="phone" placeholder="03XXXXXXXXX" required>
+<label>Location:</label><br>
+<input type="text" id="location" placeholder="Enter your location" required><br><br>
         <button type="submit">Submit Order</button>
     </form>
 
     <p id="response"></p>
 </section>
-
+<section id="contact">
+    <h2>Contact Us</h2>
+    <p>Email:ha8137915@gmail.com</p>
+    <p>Phone: 0319-9608782</p>
 <footer>
-    <p>© 2026 Royal Bites | All Rights Reserved</p>
+    <p>© 2026 Khyber Bites | All Rights Reserved</p>
 </footer>
 
 <script>
+let userLocation = "";
+
 function orderItem(item) {
     document.getElementById("food").value = item;
     window.location.href = "#order";
 }
+
+// GET LOCATION FROM INPUT (simple)
+document.getElementById("location").addEventListener("input", function() {
+    userLocation = this.value;
+});
 
 document.getElementById("orderForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
     const name = document.getElementById("name").value;
     const food = document.getElementById("food").value;
+    const phone = document.getElementById("phone").value;
+    const location = document.getElementById("location").value;
 
     fetch("https://restaurant-website-1p5e.onrender.com/order", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ name, order: food })
+        body: JSON.stringify({ 
+            name, 
+            phone, 
+            order: food,
+            location 
+        })
     })
     .then(res => res.json())
     .then(data => {
@@ -231,6 +258,8 @@ document.getElementById("orderForm").addEventListener("submit", function(e) {
     });
 });
 </script>
+
+
 
 </body>
 </html>

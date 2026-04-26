@@ -1,47 +1,41 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-const FILE = 'orders.json';
+// in-memory storage (SAFE FOR RENDER FREE)
+let orders = [];
 
-// create file if not exists
-if (!fs.existsSync(FILE)) {
-    fs.writeFileSync(FILE, "[]");
-}
-
-// Home route
+// home route
 app.get('/', (req, res) => {
     res.send("Restaurant Backend Running on Render ✅");
 });
 
-// Save order
+// save order
 app.post('/order', (req, res) => {
-    const orders = JSON.parse(fs.readFileSync(FILE));
+    const { name, order, phone, location } = req.body;
 
     orders.push({
         id: Date.now(),
-        name: req.body.name,
-        order: req.body.order
+        name,
+        order,
+        phone,
+        location
     });
-
-    fs.writeFileSync(FILE, JSON.stringify(orders, null, 2));
 
     res.json({ message: "Order saved successfully ✅" });
 });
 
-// Get orders
+// get orders
 app.get('/orders', (req, res) => {
-    const orders = JSON.parse(fs.readFileSync(FILE));
     res.json(orders);
 });
 
-// IMPORTANT FOR RENDER
-const PORT = process.env.PORT || 5000;
+// render port fix
+const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, () => {
     console.log("Server running on port", PORT);

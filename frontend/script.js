@@ -51,3 +51,4 @@ function sendMessage() {
         alert("Error sending message. See console for details.");
     });
 }
+
